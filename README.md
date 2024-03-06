@@ -5,7 +5,7 @@ NLP2024 チュートリアル３ 作って学ぶ日本語大規模言語モデ�
 - [環境構築手順](#環境構築手順)
   - [Ubuntu編](#ubuntu編)
   - [WSL2編](#wsl2編)
-  - [Mac編](#mac編)
+  - [macOS編](#macOS編)
 - [実験ソースコード](#実験ソースコード)
   - [ソフトウェアのインストール](#ソフトウェアのインストール)
   - [Inference and Evaluation](#inference-and-evaluation)
@@ -29,6 +29,7 @@ NLP2024 チュートリアル３ 作って学ぶ日本語大規模言語モデ�
 ### gcc等のインストール
 ```Shell
 sudo apt update
+sudo apt upgrade
 sudo apt install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
 sudo apt install gcc-12 g++-12
 sudo ln -s -f /usr/bin/gcc-12 /usr/bin/gcc
@@ -41,7 +42,7 @@ sudo ln -s -f /usr/bin/g++-12 /usr/bin/g++
 nvidia-smi
 ```
 
-nvidia-driver-525未満がインストールされていたら下記で一旦削除。
+nvidia-driver-525未満がインストールされていたら下記で一旦削除。525以上がインストールされていたら以降はスキップしてCUDAのインストールに進む。
 ```Shell
 sudo apt-get --purge remove nvidia-*
 sudo apt-get --purge remove cuda-*
@@ -57,6 +58,15 @@ sudo reboot
 再起動したらログインして`nvidia-smi`が動作するか確認。
 ```Shell
 nvidia-smi
+```
+
+nvidia-driverが自動更新されて動作しなくなることがあるので、nano等のエディタで設定ファイルの`Unattended-Upgrade`の値を`"0"`に変更しておく。
+```Shell
+sudo nano /etc/apt/apt.conf.d/20auto-upgrades
+```
+```Console
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "0";
 ```
 
 ### CUDA 12.1のインストール
@@ -106,8 +116,22 @@ Windows11 22H2以降のWSL2上でUbuntu 22.04を使用
 
 ## macOS編 
 M1以降のMacでmacOS 14以降を使用
+### 前提条件
+- ハードウェア
+  - Apple M1以降のSoCを搭載した Mac, RAM 16GB以上 (32GB以上を推奨), ディスク空き容量 300GB以上
+- ソフトウェア
+  - macOS
+  - 環境構築を行うユーザにsudo権限が付与されていること
 
-(準備中)
+### gcc等のインストール
+```Shell
+sudo apt update
+sudo apt upgrade
+sudo apt install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
+sudo apt install gcc-12 g++-12
+sudo ln -s -f /usr/bin/gcc-12 /usr/bin/gcc
+sudo ln -s -f /usr/bin/g++-12 /usr/bin/g++
+```
 
 # 実験ソースコード
 
