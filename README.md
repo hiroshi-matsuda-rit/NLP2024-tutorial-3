@@ -19,7 +19,7 @@ NLP2024 チュートリアル３ 作って学ぶ日本語大規模言語モデ�
 
 ### 前提条件
 - ハードウェア
-  - CPU Intel系 64bit, RAM 32GB以上 (64GB以上を推奨), ディスク空き容量 300GB以上
+  - CPU Intel系 64bit, RAM 32GB以上 (64GB以上を推奨), ディスク空き容量 200GB以上
   - GPU RAM 8GB以上 (16GB以上を推奨), Compute Capabilty 7.0以上 (8.0以上を推奨)
     - Compute Capability 8.0未満ではbfloat16を使用することができない
     - Compute CapabiltyはHPCシステムズ社の[こちらの一覧表](https://www.hpc.co.jp/product/wp-content/uploads/sites/3/2022/07/GPU-list_A3.pdf)を参照
@@ -162,7 +162,7 @@ WSL2上のUbuntuで、Ubuntu編の[gcc等のインストール](#gcc等のイン
 
 ### 前提条件
 - ハードウェア
-  - Apple M1以降のSoCを搭載したMac, RAM 16GB以上 (32GB以上を推奨), ディスク空き容量 300GB以上
+  - Apple M1以降のSoCを搭載したMac, RAM 16GB以上 (32GB以上を推奨), ディスク空き容量 200GB以上
 - ソフトウェア
   - macOS 13以上
 
@@ -189,6 +189,7 @@ python.orgから[python 3.10.11 macOS 64-bit universal2 installer](https://www.p
 - Ubuntu / WSL2
 ```Shell
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-12.1/lib64"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ### python3でvenvが使える状態かの確認
