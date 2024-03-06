@@ -115,34 +115,34 @@ Windows11 22H2以降のWSL2上でUbuntu 22.04を使用
 (準備中)
 
 ## macOS編 
-M1以降のMacでmacOS 14以降を使用
+
 ### 前提条件
 - ハードウェア
-  - Apple M1以降のSoCを搭載した Mac, RAM 16GB以上 (32GB以上を推奨), ディスク空き容量 300GB以上
+  - Apple M1以降のSoCを搭載したMac, RAM 16GB以上 (32GB以上を推奨), ディスク空き容量 300GB以上
 - ソフトウェア
-  - macOS
-  - 環境構築を行うユーザにsudo権限が付与されていること
+  - macOS 13以上
 
-### gcc等のインストール
+### Command Line Toolsのインストール
+Command Line Toolsをインストールしていない場合はコンソールアプリで下記を実行。
 ```Shell
-sudo apt update
-sudo apt upgrade
-sudo apt install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
-sudo apt install gcc-12 g++-12
-sudo ln -s -f /usr/bin/gcc-12 /usr/bin/gcc
-sudo ln -s -f /usr/bin/g++-12 /usr/bin/g++
+xcode-select --install
 ```
+
+### Python3.10.11のインストールとPATH設定
+python.orgから[python 3.10.11 macOS 64-bit universal2 installer](https://www.python.org/ftp/python/3.10.11/python-3.10.11-macos11.pkg)をダウンロードして実行。
 
 # 実験ソースコード
 
 ## ソフトウェアのインストール
 
 ### CUDAの動作確認
+- Ubuntu / WSL2
 ```Shell
 /usr/local/cuda/bin/nvcc -V
 ```
 
 ### 環境変数LD_LIBRARY_PATHにCUDAのパスを追加
+- Ubuntu / WSL2
 ```Shell
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-12.1/lib64"' >> ~/.bashrc
 ```
@@ -159,24 +159,13 @@ rm -r venv
 ### pyenv環境の構築
 
 #### pyenv未導入の場合
-- Ubuntu / WSL2
 ```Shell
 curl https://pyenv.run | bash
 ```
-- Mac
-```Shell
-brew install pyenv
-```
 
 #### pyenv導入済みの場合
-- Ubuntu / WSL2
 ```Shell
 cd ~/.pyenv/plugins/python-build/../.. && git pull && cd -
-```
-- Mac
-```Shell
-brew update
-brew upgrade pyenv
 ```
 
 ### pyenvのパス追加
@@ -189,7 +178,13 @@ echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
 source ~/.bashrc
 ```
 - Mac
-  - home brewでpyenvを導入した場合はパス設定は不要
+  - ~/.bash_profile（zshの場合は ~/.zshrc）に追加
+```Shell
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(pyenv init --path)"' >> ~/.bash_profile
+source ~/.bash_profile
+```
 
 ### pyenvでPython 3.10.13をインストール
 ```Shell
