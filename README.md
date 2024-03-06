@@ -2,16 +2,10 @@
 NLP2024 チュートリアル３ 作って学ぶ日本語大規模言語モデル - 環境構築手順と実験ソースコード
 
 ## Index
-- 環境構築手順 (準備中)
-  - Ubuntu編
-  - WSL2編
-  - Mac編
-<!--
 - [環境構築手順](#環境構築手順)
   - [Ubuntu編](#ubuntu編)
   - [WSL2編](#wsl2編)
   - [Mac編](#mac編)
--->
 - [実験ソースコード](#実験ソースコード)
   - [ソフトウェアのインストール](#ソフトウェアのインストール)
   - [Inference and Evaluation](#inference-and-evaluation)
