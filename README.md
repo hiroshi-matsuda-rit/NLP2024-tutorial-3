@@ -78,7 +78,7 @@ sudo sh cuda_12.1.1_530.30.02_linux.run
 
 既存のドライバを削除することを推奨されるがContinueを選択。
 ```Console
- Existing package manager installation of the driver found. It is strongly    │
+│ Existing package manager installation of the driver found. It is strongly    │
 │ recommended that you remove this before continuing.                          │
 │ Abort                                                                        │
 │ Continue                                                                     │
@@ -141,8 +141,13 @@ wsl --update
 ```
 
 #### WSL2上でのUbuntu 22.04のインストール
+下記を実行してユーザ設定を行います。
 ```Shell
 wsl --install -d Ubuntu-22.04
+```
+続いてnvidia-smiの動作確認を行います。
+```Shell
+nvidia-smi
 ```
 
 ### Windowsターミナルのインストール
@@ -150,7 +155,7 @@ wsl --install -d Ubuntu-22.04
 [Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab&hl=ja-jp&gl=JP)からインストールできます。
 
 ### Ubuntuの設定
-WSL2上のUbuntuで、Ubuntu編の[gcc等のインストール](#gcc等のインストール)、および、[CUDA 12.1のインストール](#CUDA+12.1のインストール)を実施します。
+WSL2上のUbuntuで、Ubuntu編の[gcc等のインストール](#gcc等のインストール)、および、[CUDA 12.1のインストール](#CUDA-12.1のインストール)を実施します。
 
 ## macOS編 
 
