@@ -5,11 +5,12 @@ NLP2024 チュートリアル３ 作って学ぶ日本語大規模言語モデ�
 - [環境構築手順](#環境構築手順)
   - [Ubuntu編](#ubuntu編)
   - [WSL2編](#wsl2編)
-  - [macOS編](#macOS編)
+  - [macOS編](#macos編)
 - [実験ソースコード](#実験ソースコード)
   - [ソフトウェアのインストール](#ソフトウェアのインストール)
   - [Inference and Evaluation](#inference-and-evaluation)
   - [Supervised Fine-tuning](#supervised-fine-tuning)
+  - [Direct Preference Optimization](#direct-preference-optimization)
   - [Pretraining](#pretraining)
 
 # 環境構築手順
@@ -145,17 +146,17 @@ wsl --update
 ```Shell
 wsl --install -d Ubuntu-22.04
 ```
-続いてnvidia-smiの動作確認を行います。
+引き続きUbuntu側でnvidia-smiの動作確認を行います。
 ```Shell
 nvidia-smi
 ```
 
+### Ubuntu側でのCUDAのインストール
+WSL2上のUbuntuで、Ubuntu編の[gcc等のインストール](#gcc等のインストール)、および、[CUDA 12.1のインストール](#cuda-12.1のインストール)を実施します。
+
 ### Windowsターミナルのインストール
 以降の作業と実験の作業性をよくするためWindowsターミナルの利用を推奨します。
 [Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab&hl=ja-jp&gl=JP)からインストールできます。
-
-### Ubuntuの設定
-WSL2上のUbuntuで、Ubuntu編の[gcc等のインストール](#gcc等のインストール)、および、[CUDA 12.1のインストール](#CUDA-12.1のインストール)を実施します。
 
 ## macOS編 
 
