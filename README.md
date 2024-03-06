@@ -110,9 +110,47 @@ accept
 ```
 
 ## WSL2編
-Windows11 22H2以降のWSL2上でUbuntu 22.04を使用
 
-(準備中)
+### 前提条件
+- ハードウェア
+  - [Ubuntu編](#Ubuntu編)の前提条件に準じる
+- ソフトウェア
+  - Windows11 22H2以降 (Windows10 22H2でも動作可能)
+  - WSL2上でUbuntu 22.04がクリーンインストールされた状態を想定
+  - 環境構築を行うユーザにAdministrator権限が付与されていること
+
+### Windows側でNVIDIA Driverをインストール
+NVIDIAの[ドライバーダウンロードページ](https://www.nvidia.co.jp/Download/index.aspx?lang=jp#)から使用する製品とOSを選択し、ダウンロードタイプは製品ブランチ/Studioを指定して、探すを押下。
+
+---
+![image](https://github.com/hiroshi-matsuda-rit/NLP2024-tutorial-3/assets/40782025/7232bef4-35c3-4ec4-a98e-7536a6503780)
+---
+
+ダウンロードしたファイルを実行してドライバをインストール。
+
+### WSL2でUbuntu 22.04をインストール
+
+#### 管理者権限でPowerShellを起動する
+- Windowsボタンを右クリックして`ターミナル（管理者）`を選択 ⇒ PowerShellが起動する
+
+#### WSL2の更新
+- PowerShellで次を実行して利用可能なLinuxディストリビューションのリストを表示
+```Shell
+wsl --set-default-version 2
+wsl --update
+```
+
+#### WSL2上でのUbuntu 22.04のインストール
+```Shell
+wsl --install -d Ubuntu-22.04
+```
+
+### Windowsターミナルのインストール
+以降の作業と実験の作業性をよくするためWindowsターミナルの利用を推奨します。
+[Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab&hl=ja-jp&gl=JP)からインストールできます。
+
+### Ubuntuの設定
+WSL2上のUbuntuで、Ubuntu編の[gcc等のインストール](#gcc等のインストール)、および、[CUDA 12.1のインストール](#CUDA+12.1のインストール)を実施します。
 
 ## macOS編 
 
