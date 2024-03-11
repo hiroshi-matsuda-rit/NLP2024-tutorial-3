@@ -392,6 +392,13 @@ ls jaster/1.2.0/
 ls jaster/1.2.0/evaluation
 ```
 
+#### dataset_dirの設定
+
+- `configs/config.yaml`をエディタで開き、上で確認した`dev/`までのパスを`dataset_dir`の値を次のようにセットする
+```yaml
+dataset_dir: "jaster/1.2.0/evaluation/dev"
+```
+
 #### 精度評価
 
 ##### JNLI devセット全件の評価
