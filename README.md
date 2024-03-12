@@ -763,7 +763,7 @@ chmod +x pretrain_llama2_distributed.sh
 < DATASET_1="./tmp/data/bookcorpus_train_1m_text_sentence"
 > DATASET_1="./dataset/mc4-ja-10k_text_document"
 
-< TOKENIZER_PATH=./tmp/tokenizer.model # offical llama tokenizer.model
+< TOKENIZER_PATH=./tmp/tokenizer.model # official llama tokenizer.model
 > TOKENIZER_PATH=./code10k_en20k_ja30k.ver2.1.model
 > export NCCL_IB_GID_INDEX=3
 > export NCCL_IB_TC=106
