@@ -1,33 +1,40 @@
 # NLP2024-tutorial-3
-NLP2024 チュートリアル３ 作って学ぶ日本語大規模言語モデル - 環境構築手順と実験ソースコード
+NLP2024 チュートリアル３: 作って学ぶ日本語大規模言語モデル - 環境構築手順と実験ソースコード  
+NLP2024 Tutorial 3: Practicing how to build a Japanese large-scale language model - Environment construction and experimental source codes
 
 ## Index
-- [環境構築手順](#環境構築手順)
-  - [Ubuntu編](#ubuntu編)
-  - [WSL2編](#wsl2編)
-  - [macOS編](#macos編)
-- [実験ソースコード](#実験ソースコード)
-  - [ソフトウェアのインストール](#ソフトウェアのインストール)
+- [環境構築手順 - Environment Construction](#環境構築手順)
+  - [Ubuntu編 - For Ubuntu](#ubuntu編)
+  - [WSL2編 - For WSL2](#wsl2編)
+  - [macOS編 - For macOS](#macos編)
+- [実験ソースコード - Experimental Source Codes](#実験ソースコード)
+  - [ソフトウェアのインストール - Software Installation](#ソフトウェアのインストール)
   - [Inference and Evaluation](#inference-and-evaluation)
   - [Supervised Fine-tuning](#supervised-fine-tuning)
   - [Direct Preference Optimization](#direct-preference-optimization)
   - [Pretraining](#pretraining)
 
 # 環境構築手順
+**Environment Construction**
 
 ## Ubuntu編
+**For Ubuntu**
 
-### 前提条件
-- ハードウェア
-  - CPU Intel系 64bit, RAM 32GB以上 (64GB以上を推奨), ディスク空き容量 200GB以上
-  - GPU RAM 8GB以上 (16GB以上を推奨), Compute Capabilty 7.0以上 (8.0以上を推奨)
+### 前提条件 - Prerequisites
+- Hardwares
+  - CPU Intel 64bit, RAM >=32GB (>=64GB recommended), Free Disk Space >=200GB
+  - GPU RAM >=8GB (>=16GB recommended), Compute Capabilty >=7.0 (>=8.0 recommended)
     - Compute Capability 8.0未満ではbfloat16を使用することができない
+      - Cannot use bfloat16 with Compute Capability below 8.0
     - Compute CapabiltyはHPCシステムズ社の[こちらの一覧表](https://www.hpc.co.jp/product/wp-content/uploads/sites/3/2022/07/GPU-list_A3.pdf)を参照
-- ソフトウェア
+      - Compute Capabilty can be checked in [this table](https://www.hpc.co.jp/product/wp-content/uploads/sites/3/2022/07/GPU-list_A3.pdf).
+- Softwares
   - Ubuntu 22.04がクリーンインストールされた状態を想定
+    - Assuming a clean installation of Ubuntu 22.04
   - 環境構築を行うユーザにsudo権限が付与されていること
+    - The sudo privileges have been granted to the user who will be building the environment.
 
-### gcc等のインストール
+### gcc12 installation steps
 ```Shell
 sudo apt update
 sudo apt upgrade
@@ -37,31 +44,38 @@ sudo ln -s -f /usr/bin/gcc-12 /usr/bin/gcc
 sudo ln -s -f /usr/bin/g++-12 /usr/bin/g++
 ```
 
-### nvidia-driver-535 のインストール
-`nvidia-smi`が実行できたら既にnvidia-driverがインストールされている。
+### nvidia-driver-535 installation steps
+`nvidia-smi`が実行できたら既にnvidia-driverがインストールされている。  
+If you can run `nvidia-smi`, nvidia-driver is already installed.
 ```Shell
 nvidia-smi
 ```
 
-nvidia-driver-525未満がインストールされていたら下記で一旦削除。525以上がインストールされていたら以降はスキップしてCUDAのインストールに進む。
+nvidia-driver-525未満がインストールされていたら下記で一旦削除。525以上がインストールされていたら以降はスキップしてCUDAのインストールに進む。  
+If the installed nvidia-driver version is lower than 525, remove it by following the steps below.
+If the nvidia-driver version is 525 or higher is installed, skip the rest and proceed to install CUDA.
 ```Shell
 sudo apt-get --purge remove nvidia-*
 sudo apt-get --purge remove cuda-*
 ```
 
-nvidia-driverをインストールして再起動。
+nvidia-driverをインストールして再起動。  
+Install nvidia-driver and reboot.
 ```Shell
 sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo apt update
 sudo apt install nvidia-driver-535
 sudo reboot
 ```
-再起動したらログインして`nvidia-smi`が動作するか確認。
+
+再起動したらログインして`nvidia-smi`が動作するか確認。  
+After restarting, login and check if `nvidia-smi` works.
 ```Shell
 nvidia-smi
 ```
 
-nvidia-driverが自動更新されて動作しなくなることがあるので、nano等のエディタで設定ファイルの`Unattended-Upgrade`の値を`"0"`に変更しておく。
+nvidia-driverが自動更新されて動作しなくなることがあるので、nano等のエディタで設定ファイルの`Unattended-Upgrade`の値を`"0"`に変更しておく。  
+Since nvidia-driver may be updated automatically and stop working, change the value of `Unattended-Upgrade` in the configuration file to `"0"` using an editor such as nano.
 ```Shell
 sudo nano /etc/apt/apt.conf.d/20auto-upgrades
 ```
@@ -70,14 +84,16 @@ APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Unattended-Upgrade "0";
 ```
 
-### CUDA 12.1のインストール
-[公式サイト](https://developer.nvidia.com/cuda-12-1-1-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=runfile_local)にあるrunfileでのインストール手順を実行。
+### CUDA 12.1 installation steps
+[公式サイト](https://developer.nvidia.com/cuda-12-1-1-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=runfile_local)にあるrunfileでのインストール手順を実行。  
+Execute the installation procedure using the runfile on [the official website](https://developer.nvidia.com/cuda-12-1-1-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=runfile_local).
 ```Shell
 wget https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda_12.1.1_530.30.02_linux.run
 sudo sh cuda_12.1.1_530.30.02_linux.run
 ```
 
-既存のドライバを削除することを推奨されるがContinueを選択。
+既存のドライバを削除することを推奨されるがContinueを選択。  
+Although it is recommended to remove the existing driver, select Continue.
 ```Console
 │ Existing package manager installation of the driver found. It is strongly    │
 │ recommended that you remove this before continuing.                          │
@@ -85,13 +101,15 @@ sudo sh cuda_12.1.1_530.30.02_linux.run
 │ Continue                                                                     │
 ```
 
-End User License Agreementについて確認したらacceptを入力。
+End User License Agreementについて確認したらacceptを入力。  
+After confirming the End User License Agreement, enter accept.
 ```Console
 Do you accept the above EULA? (accept/decline/quit):
 accept
 ```
 
-セットアップオプションを次のように設定してInstallを実行。
+セットアップオプションを次のように設定してInstallを実行。  
+Set the setup options as follows and run Install.
 ```Console
 │ CUDA Installer                                                               │
 │ - [ ] Driver                                                                 │
@@ -105,7 +123,9 @@ accept
 │   Install                                                                    │
 ```
 
-インストールが終わったらnvccを実行できるか確認。
+インストールが終わったらnvccを実行できるか確認。  
+
+Once the installation is complete, check if you can run nvcc.
 ```Shell
 /usr/local/cuda/bin/nvcc -V
 ```
