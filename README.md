@@ -8,7 +8,7 @@ NLP2024 Tutorial 3: Practicing how to build a Japanese large-scale language mode
   - [For WSL2](#for-wsl2)
   - [For macOS](#for-macos)
 - [実験ソースコード / Experimental Source Codes](#実験ソースコード)
-  - [Software Installation](#ソフトウェアのインストール)
+  - [Software Installation](#software-installation)
   - [Inference and Evaluation](#inference-and-evaluation)
   - [Supervised Fine-tuning](#supervised-fine-tuning)
   - [Direct Preference Optimization](#direct-preference-optimization)
@@ -181,7 +181,7 @@ On Ubuntu on WSL2, perform the steps described in the Ubuntu edition for [gcc-12
 
 ### Windowsターミナルのインストール / Installing Windows Terminal
 以降の作業と実験の作業性をよくするためWindowsターミナルの利用を推奨します。 / We recommend using Windows Terminal to improve the workability of subsequent work and experiments.  
-[Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab&hl=ja-jp&gl=JP)からインストールできます。 / It can be installed from [Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab).
+[Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab&hl=ja-jp&gl=JP)からインストールできます。 / The Windows Terminal can be installed from [Microsoft Store](https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&activetab=pivot%3Aoverviewtab).
 
 ## For macOS
 
@@ -203,22 +203,22 @@ python.orgから[python 3.10.11 macOS 64-bit universal2 installer](https://www.p
 # 実験ソースコード
 **Experimental Source Codes**
 
-## ソフトウェアのインストール
+## Software Installation
 
-### CUDAの動作確認
+### CUDAの動作確認 / Checking the operation of CUDA
 - Ubuntu / WSL2
 ```Shell
 /usr/local/cuda/bin/nvcc -V
 ```
 
-### 環境変数LD_LIBRARY_PATHにCUDAのパスを追加
+### 環境変数LD_LIBRARY_PATHにCUDAのパスを追加 / Add CUDA path to environment variable LD_LIBRARY_PATH
 - Ubuntu / WSL2
 ```Shell
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-12.1/lib64"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### python3でvenvが使える状態かの確認
+### python3でvenvが使える状態かの確認 / Check if venv is usable in python3
 ```Shell
 python3 -V
 python3 -m venv venv
@@ -227,29 +227,29 @@ deactivate
 rm -r venv
 ```
 
-### pyenv環境の構築
+### pyenv環境の構築 / Building a pyenv environment
 
-#### pyenv未導入の場合
+#### pyenv未導入の場合 / If pyenv is not installed
 ```Shell
 curl https://pyenv.run | bash
 ```
 
-#### pyenv導入済みの場合
+#### pyenv導入済みの場合 / If pyenv has been installed
 ```Shell
 cd ~/.pyenv/plugins/python-build/../.. && git pull && cd -
 ```
 
-### pyenvのパス追加
+### pyenvのパス追加 / Add pyenv to the PATH
 - Ubuntu / WSL2
-  - ~/.bashrc（zshの場合は ~/.zshrc）に追加
+  - \~/.bashrc（zshの場合は \~/.zshrc）に追加 / Add to \~/.bashrc (\~/.zshrc for zsh)
 ```Shell
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
 source ~/.bashrc
 ```
-- Mac
-  - ~/.bash_profile（zshの場合は ~/.zshrc）に追加
+- macOS
+  - \~/.bash_profile（zshの場合は \~/.zshrc）に追加 / Add to \~/.bash_profile (\~/.zshrc for zsh)
 ```Shell
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
@@ -257,12 +257,12 @@ echo 'eval "$(pyenv init --path)"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-### pyenvでPython 3.10.13をインストール
+### pyenvでPython 3.10.13をインストール / Install Python 3.10.13 with pyenv
 ```Shell
 pyenv install 3.10.13
 ```
 
-### 実験ディレクトリとvenv環境の作成・有効化・バージョン確認
+### 実験ディレクトリとvenv環境の作成・有効化・バージョン確認 / Creation, activation, and version confirmation of experiment directory and venv environment
 ```Shell
 mkdir my-llm
 cd my-llm
@@ -274,35 +274,35 @@ python -V
 pip -V
 ```
 
-### PyTorchのインストールと動作確認
+### PyTorchのインストールと動作確認 / Installing PyTorch and checking its operation
 
 ```Shell
 pip install torch
 ```
 
 - Ubuntu / WSL2
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 torch.cuda.is_available()
 torch.cuda.device_count()
 torch.cuda.get_device_name()
 ```
-- Mac
-  - Pythonの対話モードで下記を実行。
+- macOS
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 torch.backends.mps.is_available()
 ```
 
-### Transformers＋BERTで動作確認
+### BERTでTransformersの動作確認 / Check the operation of Transformers with BERT
 
 ```Shell
 pip install transformers fugashi unidic-lite
 ```
 
 - Ubuntu / WSL2
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 from transformers import AutoModelForMaskedLM, AutoTokenizer, pipeline
 model_name = "cl-tohoku/bert-large-japanese-v2"
@@ -312,8 +312,8 @@ model = model.to("cuda:0")
 mlm = pipeline("fill-mask", model=model, tokenizer=tokenizer, device="cuda:0")
 mlm("語りえぬものについては、[MASK]しなければならない。")[:2]
 ```
-- Mac
-  - Pythonの対話モードで下記を実行。
+- macOS
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 from transformers import AutoModelForMaskedLM, AutoTokenizer, pipeline
 model_name = "cl-tohoku/bert-large-japanese-v2"
@@ -326,7 +326,7 @@ mlm("語りえぬものについては、[MASK]しなければならない。")[
 
 ## Inference and Evaluation
 
-### text-generation実験
+### text-generation
 
 ```Shell
 pip install accelerate safetensors bitsandbytes
@@ -334,7 +334,7 @@ pip install accelerate safetensors bitsandbytes
 
 #### 1.3B
 - FP32
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -345,7 +345,7 @@ pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device_map=
 print(pipe("語りえぬものについては、", max_length=128))
 ```
 - FP16
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -356,7 +356,7 @@ pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device_map=
 print(pipe("語りえぬものについては、", max_length=128))
 ```
 - BF16 - Ubuntu / WSL2
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -369,7 +369,7 @@ print(pipe("語りえぬものについては、", max_length=128))
 
 #### 13B
 - FP16
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -380,7 +380,7 @@ pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device_map=
 print(pipe("語りえぬものについては、", max_length=128))
 ```
 - 4bit - Ubuntu / WSL2
-  - Pythonの対話モードで下記を実行。
+  - Pythonの対話モードで下記を実行 / Run the following in Python interactive mode
 ```Python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, BitsAndBytesConfig
@@ -392,13 +392,13 @@ model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float
 
 ### llm-jp-eval
 
-#### インストール
+#### Installation
 
-- venv環境に入っている場合はいったん抜ける
+- venv環境に入っている場合はいったん抜ける / If you are in a venv environment, exit it once.
 ```Shell
 deactivate
 ```
-- llm-jp-evalのcloneとvenv環境の作成・有効化
+- llm-jp-evalのcloneとvenv環境の作成・有効化 / After cloning llm-jp-eval, create and enable venv.
 ```Shell
 git clone https://github.com/llm-jp/llm-jp-eval.git
 cd llm-jp-eval
@@ -409,7 +409,7 @@ pip install -e .
 wandb disabled
 ```
 
-#### jasterのビルドとディレクトリ構成の確認
+#### jasterのビルドとディレクトリ構成の確認 / Building jaster and checking the directory structure
 
 ```Shell
 python scripts/preprocess_dataset.py --dataset-name all --output-dir jaster/
@@ -418,16 +418,16 @@ ls jaster/1.2.0/
 ls jaster/1.2.0/evaluation
 ```
 
-#### dataset_dirの設定
+#### dataset_dirの設定 / Setting dataset_dir
 
-- `configs/config.yaml`をエディタで開き、上で確認した`dev/`までのパスを`dataset_dir`の値を次のようにセットする
+- `configs/config.yaml`をエディタで開き、上で確認した`dev/`までのパスを`dataset_dir`の値を次のようにセットする / Open `configs/config.yaml` in an editor and set the path to `dev/` confirmed above and the value of `dataset_dir` as follows.
 ```yaml
 dataset_dir: "jaster/1.2.0/evaluation/dev"
 ```
 
-#### 精度評価
+#### 精度評価 / Accuracy evaluation
 
-##### JNLI devセット全件の評価
+##### JNLI devセット全件の評価 / Evaluation of all JNLI dev sets
 
 - FP32
 ```Shell
@@ -457,7 +457,7 @@ python scripts/evaluate_llm.py torch_dtype=bf16 \
   tokenizer.pretrained_model_name_or_path=llm-jp/llm-jp-1.3b-v1.0
 ```
 
-##### jaster全データセット先頭100件の評価
+##### jaster全データセット先頭100件の評価 / Evaluate the first 100 results for each of all datasets in jaster
 
 - FP32
 ```Shell
@@ -483,14 +483,14 @@ python scripts/evaluate_llm.py torch_dtype=bf16 \
 
 ## Supervised Fine-tuning
 
-### インストール
+### Installation
 
-- llm-jp-eval等の環境に入っている場合はいったん抜ける
+- llm-jp-eval等のvenv環境に入っている場合はいったん抜ける / If you are in a venv environment such as llm-jp-eval, exit it once.
 ```Shell
 deactivate
 cd ..
 ```
-- llm-jp-sftのcloneとvenv環境の作成・有効化
+- llm-jp-sftのcloneとvenv環境の作成・有効化 / After cloning llm-jp-sft, create and enable venv.
 ```Shell
 git clone https://github.com/llm-jp/llm-jp-sft.git
 cd llm-jp-sft
@@ -499,20 +499,20 @@ source venv/bin/activate
 pip install -r requirements.txt
 wandb disabled
 ```
-- Macでは `pip uninstall bitsandbytes` を行っておく
+- macOSでは `pip uninstall bitsandbytes` を行っておく / On macOS, run `pip uninstall bitsandbytes`
 
 ### jasterの参照
 
-- llm-jp-evalのjasterディレクトリへのsymbolic linkを作成しておく
+- llm-jp-evalのjasterディレクトリへのsymbolic linkを作成しておく / Create a symbolic link to the jaster directory of llm-jp-eval
 ```Shell
 ln -s ../llm-jp-eval/jaster .
 ```
 
-### Ichikara-instruction公開データのプロンプト化
+### Ichikara-instruction公開データのプロンプト化 / Converting Ichikara-instruction public data to prompt format
 
-- 次のページから利用許諾を確認した上で公開データを入手する
-  - [LLMのための日本語インストラクションデータ作成プロジェクト](https://liat-aip.sakura.ne.jp/wp/llm%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%87%E3%83%BC%E3%82%BF%E4%BD%9C%E6%88%90/)
-- `convert_ichikara.py`の作成
+- 次のページから利用許諾を確認した上で公開データを入手する / Check the usage permission from the next page and obtain the public data.
+  - [LLMのための日本語インストラクションデータ作成プロジェクト / Japanese instruction data creation project for LLM](https://liat-aip.sakura.ne.jp/wp/llm%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%87%E3%83%BC%E3%82%BF%E4%BD%9C%E6%88%90/)
+- `convert_ichikara.py`の作成 / Creating `convert_ichikara.py`
 ```Python
 import json
 import random
@@ -534,7 +534,7 @@ if __name__ == "__main__":
     json.dump(train, sys.stdout, indent=1, ensure_ascii=False)
     json.dump(dev, sys.stderr, indent=1, ensure_ascii=False)
 ```
-- 公開データの変換と出力の確認
+- 公開データの変換と出力の確認 / Convert published data and check output
 ```Shell
 python convert_ichikara.py Distribution20231115/*.json \
   > jaster/1.2.0/tuning/train/ichikara.json \
@@ -581,7 +581,7 @@ python train.py \
   --output_dir results/llm-jp-1.3b-lora-jaster_ichikara-v1.0
 ```
 
-### フルパラメータSFT
+### Full Parameter SFT
 
 - 8GPU構成向けの`configs/accelerate_config_zero3.yaml`の作成
 ```yaml
@@ -625,27 +625,27 @@ accelerate launch --config_file configs/accelerate_config_zero3.yaml \
 
 ## Direct Preference Optimization
 
-### リポジトリのclone
+### Clone the repository
 
-- llm-jp-sft等の環境に入っている場合はいったん抜ける
+- llm-jp-sft等の環境に入っている場合はいったん抜ける / If you are in an environment such as llm-jp-sft, exit it once.
 ```Shell
 deactivate
 cd ..
 ```
-- llm-jp-dpoをclone
+- Clone llm-jp-dpo
 ```Shell
 git clone https://github.com/llm-jp/llm-jp-dpo.git
 cd llm-jp-dpo
 ```
 
 ### Ubuntu / WSL2
-- poetryでライブラリをインストール
+- Installing libraries with poetry
 ```Shell
 poetry install
 poetry shell
 wandb disabled
 ```
-- accelerate_config/single_gpu.yamlを作成
+- Creating `accelerate_config/single_gpu.yaml`
 ```yaml
 compute_environment: LOCAL_MACHINE
 debug: false
@@ -663,47 +663,48 @@ tpu_use_cluster: false
 tpu_use_sudo: false
 use_cpu: false
 ```
-- AccelerateでDPO学習プロセスを起動
+- AccelerateでDPO学習プロセスを起動 / Launch the DPO training process with Accelerate
 ```Shell
 accelerate launch --config_file accelerate_configs/single_gpu.yaml train.py --model llm-jp/llm-jp-1.3b-v1.0 --per-device-train-batch-size 4 --per-device-eval-batch-size 8
 ```
 
-#### Mac (パフォーマンスに難があるため改良中です)
-- ライブラリのインストールはpoetryではなくpipで行う
+#### macOS (パフォーマンスに難があるため改良中です / Performance needs improvement)
+- ライブラリのインストールはpoetryではなくpipで行う / Install libraries using pip instead of poetry
 ```Shell
 python -m venv venv
 source venv/bin/activate
 pip install torch==2.2.0 transformers==4.37.2 trl==0.7.10 peft==0.8.2 datasets==2.16.1 accelerate==0.26.1 wandb
 wandb disabled
 ```
-- エディタで`train.py`を開き`main()`の先頭に`torch.dynamo`のエラー対策を追加
+- エディタで`train.py`を開き`main()`の先頭に`torch.dynamo`のエラー対策を追加 / Open `train.py` in the editor and add a workaround to avoid errors in `torch.dynamo` at the beginning of `main()`
 ```Python
 def main():
     import torch._dynamo
     torch._dynamo.config.suppress_errors = True
 ```
-- 同様に`AutoModelForCausalLM.from_pretrained()`の`torch_dtype`を`float16`に変更
+- 同様に`AutoModelForCausalLM.from_pretrained()`の`torch_dtype`を`float16`に変更 / Similarly, change `torch_dtype` of `AutoModelForCausalLM.from_pretrained()` to `float16`
 ```Python
         torch_dtype=torch.float16, # bfloat16,
 ```
-- 同様に`TrainingArguments()`から`bf16`の指定をコメントアウト
+- 同様に`TrainingArguments()`から`bf16`の指定をコメントアウト / 
+Similarly, comment out the `bf16` specification from `TrainingArguments()`
 ```Python
         # bf16=True,
 ```
-- PythonでDPO学習プロセスを起動
+- PythonでDPO学習プロセスを起動 / Launch DPO learning process with Python
 ```Shell
 python train.py --model llm-jp/llm-jp-1.3b-v1.0 --per-device-train-batch-size 4 --per-device-eval-batch-size 8
 ```
 
 ## Pretraining
 
-### 環境構築
-- llm-jp-dpo等の環境に入っている場合はいったん抜ける
+### 環境構築 / Environment construction
+- llm-jp-dpo等の環境に入っている場合はいったん抜ける / If you are in an environment such as llm-jp-dpo, exit it once.
 ```Shell
 deactivate
 cd ..
 ```
-- CUDA 11.8向けにMegatron-DeepSpeed環境を構築する
+- CUDA 11.8向けにMegatron-DeepSpeed環境を構築する / Build a Megatron-DeepSpeed ​​environment for CUDA 11.8
 ```Shell
 echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-11.8/lib64"' >> ~/.bashrc
 source ~/.bashrc
@@ -716,35 +717,36 @@ pip install torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorc
 pip install "pip>=23.1" "setuptools>=65.5.0" wheel pybind11 six regex nltk numpy deepspeed==0.12.2 einops tensorboard transformers sentencepiece "protobuf<3.21.0"
 ```
 
-#### apexのインストール
-- [Installation - From Source - Linux](https://github.com/NVIDIA/apex#linux) の手順を pip>=23.1 の前提で進める
-- エラーにハマりやすいので以下の点に注意して作業を行う
-  - 本来10分ほどかかるはずのビルド処理がすぐに終わる場合は*.soのコンパイルがスキップされている
-  - build/lib.linux-x86_64-cpython-310/apex_C.cpython-310-x86_64-linux-gnu.so がなければビルド失敗
+#### Installing apex
+- [Installation - From Source - Linux](https://github.com/NVIDIA/apex#linux) の手順を`pip>=23.1`の前提で進める / Execute [Installation - From Source - Linux](https://github.com/NVIDIA/apex#linux) with assuming `pip>=23.1`
+- エラーにハマりやすいので以下の点に注意して作業を行う / It's easy to get stuck in comiplation errors, so pay attention to the following points.
+  - 本来10分ほどかかるはずのビルド処理がすぐに終わる場合は*.soのコンパイルがスキップされている / If the build process, which should normally take about 10 minutes, finishes immediately, the *.so compilation is being skipped.
+  - 次のファイルががなければビルド失敗 / Build fails if the following files are missing
+    - build/lib.linux-x86_64-cpython-310/apex_C.cpython-310-x86_64-linux-gnu.so
 ```Shell
 git clone https://github.com/NVIDIA/apex -b 23.08 ; cd apex
 pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
 cd ..
 ```
 
-#### FlashAttention2のインストール
-- ninjaのバージョンが 1.11.1 か確認する
+#### Installing FlashAttention2
+- ninjaのバージョンが 1.11.1 か確認する / Check if ninja version is 1.11.1
 ```Shell
 ninja --version
 ```
-- バージョン上限を指定してflash-attnをインストール
+- バージョン上限を指定してflash-attnをインストール / Install flash-attn with specified version limit
 ```Shell
 pip install "flash-attn<2.4.0" --no-build-isolation
 ```
 
-### トークナイザの準備
-- llm-jp-tokenizer v2.1 SentencePieceモデルファイルのダウンロード
+### トークナイザの準備 / Preparing the tokenizer
+- llm-jp-tokenizer v2.1 SentencePieceモデルファイルのダウンロード / llm-jp-tokenizer v2.1 SentencePiece model file download
 ```Shell
 curl -O -L https://github.com/llm-jp/llm-jp-tokenizer/raw/main/models/ver2.1/code10k_en20k_ja30k.ver2.1.model
 ```
 
-### 事前学習データの準備
-- 次の内容で`download_mc4_ja.py`を作成
+### 事前学習データの準備 / Preparation of pre-training data
+- 次の内容で`download_mc4_ja.py`を作成 / Create `download_mc4_ja.py` with the following content
 ```Python
 import json
 import sys
@@ -761,11 +763,11 @@ if __name__ == "__main__":
         if count == limit:
             break
 ```
-- `download_mc4_ja.py`を実行してmC4の日本語パートから先頭1万件を`mc4-ja-10k.jsonl`に保存
+- `download_mc4_ja.py`を実行してmC4の日本語パートから先頭1万件を`mc4-ja-10k.jsonl`に保存 / Execute `download_mc4_ja.py` and save the first 10,000 items from the Japanese part of mC4 to `mc4-ja-10k.jsonl`
 ```Shell
 python download_mc4_ja.py 10000 > mc4-ja-10k.jsonl
 ```
-- データセットをビルドして作成されたファイルを確認
+- データセットをビルドして作成されたファイルを確認 / Build the dataset and check the created files
 ```Shell
 python tools/preprocess_data.py \
   --input ./mc4-ja-10k.jsonl \
@@ -777,14 +779,14 @@ python tools/preprocess_data.py \
 ls -l dataset/mc4-ja-10k*
 ```
 
-### 事前学習スクリプトの準備
-- サンプルの`pretrain_llama2_distributed.sh`をコピー
+### 事前学習スクリプトの準備 / Preparing the pretraining script
+- サンプルの`pretrain_llama2_distributed.sh`をコピー / Copy the sample `pretrain_llama2_distributed.sh`
 ```Shell
 cp examples_deepspeed/pretrain_llama2_distributed.sh .
 chmod +x pretrain_llama2_distributed.sh
 ```
-- `./pretrain_llama2_distributed.sh`を編集して次の行を変更
-  - `<`の行を`>`の行の内容に置き換える
+- `./pretrain_llama2_distributed.sh`を編集して次の行を変更 / Edit `./pretrain_llama2_distributed.sh` and change the following line
+  - `<`の行を`>`の行の内容に置き換える / Replace the `<` line with the contents of the `>` line
 ```
 < DATASET_1="./tmp/data/bookcorpus_train_1m_text_sentence"
 > DATASET_1="./dataset/mc4-ja-10k_text_document"
@@ -797,14 +799,14 @@ chmod +x pretrain_llama2_distributed.sh
 <        --tokenizer-type GPTSentencePieceTokenizer \
 >        --tokenizer-type SentencePieceTokenizer \
 ```
-- pretrain_gpt.pyの最後から2行目のデフォルトトークナイザの指定をコメントアウト
+- `pretrain_gpt.py`の最後から2行目のデフォルトトークナイザの指定をコメントアウト / Comment out the default tokenizer specification on the second to last line of `pretrain_gpt.py`
 ```Python
              # args_defaults={'tokenizer_type': 'GPT2BPETokenizer'},
 ```
 
-### 事前学習の実行
+### 事前学習の実行 / Execute pretraining
 ```Shell
 ./pretrain_llama2_distributed.sh
 ```
 
-以上
+以上 / That's all.
