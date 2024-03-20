@@ -4,7 +4,7 @@ NLP2024 Tutorial 3: Practicing how to build a Japanese large-scale language mode
 
 - Tutorial Slide
 <p align="center">
-  <a target="_blank" href="https://docs.google.com/presentation/d/1iROcbUOOBZlqIgmbySS_LYcrJsk8RRJxoHzhmkGV-Wk/edit?usp=sharing">
+  <a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/presentation/d/1iROcbUOOBZlqIgmbySS_LYcrJsk8RRJxoHzhmkGV-Wk/edit?usp=sharing">
     <img width="640px" src="https://github.com/hiroshi-matsuda-rit/NLP2024-tutorial-3/assets/40782025/594ad269-6f06-4dd3-95d2-cf6be31f09e2"/> <br/>
     https://docs.google.com/presentation/d/1iROcbUOOBZlqIgmbySS_LYcrJsk8RRJxoHzhmkGV-Wk/edit?usp=sharing
   </a>
