@@ -2,13 +2,16 @@
 NLP2024 チュートリアル３: 作って学ぶ日本語大規模言語モデル - 環境構築手順と実験ソースコード  
 NLP2024 Tutorial 3: Practicing how to build a Japanese large-scale language model - Environment construction and experimental source codes
 
-- Tutorial Slide
+- Tutorial Video
 <p align="center">
-  <a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/presentation/d/1iROcbUOOBZlqIgmbySS_LYcrJsk8RRJxoHzhmkGV-Wk/edit?usp=sharing">
-    <img width="640px" src="https://github.com/hiroshi-matsuda-rit/NLP2024-tutorial-3/assets/40782025/594ad269-6f06-4dd3-95d2-cf6be31f09e2"/> <br/>
-    https://docs.google.com/presentation/d/1iROcbUOOBZlqIgmbySS_LYcrJsk8RRJxoHzhmkGV-Wk/edit?usp=sharing
+  <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=eiP2KUOi570">
+    <img width="640px" src="https://github.com/hiroshi-matsuda-rit/NLP2024-tutorial-3/assets/40782025/571bd8fb-f0df-4b10-8c19-d2d9cb550188"/> <br/>
+    https://www.youtube.com/watch?v=eiP2KUOi570
   </a>
 </p>
+
+- Tutorial Slide
+  - https://docs.google.com/presentation/d/1iROcbUOOBZlqIgmbySS_LYcrJsk8RRJxoHzhmkGV-Wk/edit?usp=sharing
 
 ## Index
 - [環境構築手順 / Environment Construction](#環境構築手順)
